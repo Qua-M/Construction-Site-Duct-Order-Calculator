@@ -1,11 +1,11 @@
 import time
-import numpy as np
 import pandas as pd
-import datetime as dt
-sf = float(input("Enter the drawing scale: "))
 
+counter=0
+sf = float(input("Enter the drawing scale: "))
 standard_pieces = pd.DataFrame(columns=['H1XW1','Pieces','Joint'])
 extra_pieces = pd.DataFrame(columns=['H1XW1','Length','Joint'])
+fittings = pd.DataFrame(columns=["Fitting Name","C1","W1","C2","W2","T1","T2","OFF-1","OFF-2","L","R"])
 stan_lis_sec=[]
 stan_lis_no=[]
 stan_lis_joint=[]
@@ -16,6 +16,7 @@ extr_lis_joint=[]
 
 fitt_lis_name=[]
 while True:
+    print(counter)
     start_point =input("To Start a Duct line Press any key\nPress Q to Quit\n")
     if start_point == 'q' or start_point == 'Q':
         break
@@ -49,37 +50,34 @@ while True:
             for i,j,k,l in zip(extr_lis_sec, extr_lis_len, extr_lis_joint, range(len(extr_lis_sec))):
                 extra_pieces.loc[l]=[i,j,k]
 
-            # print(standard_pieces)
-            # print(extra_pieces)
             while True:
                 trig=input("Want to pass a fitting? Y or N: \nEnter Q to quit and Save Data...\n")
                 trig.lower()
                 if trig=='q':
                     standard_pieces.to_csv('MainPieces.csv')
                     extra_pieces.to_csv('ExtraPieces.csv')
+                    fittings.to_csv('Fittings.csv')
                     break
                 elif trig == 'n':
                     pass
 
                 elif trig=='y':
-                    fittings=pd.DataFrame(columns=['H1','W1','W2','L','T1','T2','C1','C2','R ','OFF-1','OFF-2'])
-                    i=0
                     while True:
                         fitt_type=int(input("Choose the fitting: \nELBOW-45 OFFSET TRANSITION ELBOW-A ELBOW-B    Straight Line\n    1      2        3        4       5           9\n"))
 
                         if fitt_type == 1:
-                            i=i+1
+                            counter = counter + 1
                             T1=float(input("Enter T1 in cm: "))*sf*1000
                             T2=float(input("Enter T2 in cm: "))*sf*1000
                             C1=float(input("Enter The Width (C1) of the next Duct: "))*sf*1000
                             W1=float(input("Enter The Hieght (W1) of the next Duct: "))*sf*1000
                             C2=float(input("Enter The Width (C2) of the next Duct: "))*sf*1000
                             W2=float(input("Enter The Hieght (W2) of the next Duct: "))*sf*1000
-                            fittings.loc[i]=['None',W1,W2,'None',T1,T2,C1,C2,'None','None','None']
+                            fittings.loc[counter]=["ELBOW-45",C1,W1,C2,W2,T1,T2,"None","None","None","None"]
 
 
                         elif fitt_type == 2:
-                            i=i+1
+                            counter = counter + 1
                             OFF_1=int(input("Enter OFF1 in cm: "))*sf*1000
                             OFF_2=int(input("Enter OFF2 in cm: "))*sf*1000
                             L=float(input("Enter the length: "))*sf*1000
@@ -87,30 +85,30 @@ while True:
                             W1=float(input("Enter The Hieght(W1) of the next Duct: "))*sf*1000
                             C2=float(input("Enter The Width(C2) of the next Duct: "))*sf*1000
                             W2=float(input("Enter The Hieght(W2) of the next Duct: "))*sf*1000
-                            fittings.loc[i]=['None',W1,W2,L,'None','None',C1,C2,'None',OFF_1,OFF_2]
+                            fittings.loc[counter]=["OFFSET",C1,W1,C2,W2,"None","None",OFF_1,OFF_2,L,"None"]
 
                         elif fitt_type == 3:
-                            i=i+1
+                            counter = counter + 1
                             OFF_1=float(input("Enter OFF1 in cm: "))*sf*1000
                             OFF_2=float(input("Enter OFF2 in cm: "))*sf*1000
                             C1=float(input("Enter The Width (C1) of the next Duct: "))*sf*1000
                             W1=float(input("Enter The Hieght (W1) of the next Duct: "))*sf*1000
                             C2=float(input("Enter The Width (C2) of the next Duct: "))*sf*1000
                             W2=float(input("Enter The Hieght (W2) of the next Duct: "))*sf*1000
-                            fittings.loc[i]=['None',W1,W2,'None','None','None',C1,C2,'None',OFF_1,OFF_2]
+                            fittings.loc[counter]=["TRANSITION",C1,W1,C2,W2,"None","None",OFF_1,OFF_2,"None","None"]
 
                         elif fitt_type == 4:
-                            i=i+1
+                            counter = counter + 1
                             T1=float(input("Enter T1 in cm: "))*sf*1000
                             T2=float(input("Enter T2 in cm: "))*sf*1000
                             C1=float(input("Enter The Width (C1) of the Next Duct: "))*sf*1000
                             W1=float(input("Enter The Hieght (W1) of the Next Duct: "))*sf*1000
                             C2=float(input("Enter The Width (C2) of the Next Duct: "))*sf*1000
                             W2=float(input("Enter The Hieght (W2) of the Next Duct: "))*sf*1000
-                            fittings.loc[i]=['None',W1,W2,'None',T1,T2,C1,C2,'None','None','None']
+                            fittings.loc[counter]=["ELBOW-A",C1,W1,C2,W2,T1,T2,"None","None","None","None"]
 
                         elif fitt_type == 5:
-                            i=i+1
+                            counter = counter + 1
                             T1=float(input("Enter T1 in cm: "))*sf*1000
                             T2=float(input("Enter T2 in cm: "))*sf*1000
                             C1=float(input("Enter The Width (C1) of the Next Duct: "))*sf*1000
@@ -118,12 +116,9 @@ while True:
                             C2=float(input("Enter The Width (C2) of the Next Duct: "))*sf*1000
                             W2=float(input("Enter The Hieght (W2) of the Next Duct: "))*sf*1000
                             R=float(input("Enter The Radius of the elbow in cm: "))*sf*1000
-                            fittings.loc[i]=['None',W1,W2,'None',T1,T2,C1,C2,R,'None','None']
+                            fittings.loc[counter]=["ELBOW-B",C1,W1,C2,W2,T1,T2,"None","None","None",R]
 
                         elif fitt_type == 9:
-                            live = dt.datetime.now()
-                            date=(str(live.year)+"_"+str(live.month)+"_"+str(live.second)+"_"+str(live.microsecond))
-                            fittings.to_csv(date+"_fittings.csv")
                             break
                 else:
                     print("\n"*100)
@@ -154,8 +149,6 @@ while True:
             for i,j,k,l in zip(extr_lis_sec, extr_lis_len, extr_lis_joint, range(len(extr_lis_sec))):
                 extra_pieces.loc[l]=[i,j,k]
 
-            print(standard_pieces)
-            print(extra_pieces)
             trig=input("Want to pass a fitting? Y or N: \nEnter Q to quit...\n")
             trig.lower()
             if trig=='q':
@@ -166,67 +159,61 @@ while True:
                 pass
 
             elif trig=='y':
-                fittings=pd.DataFrame(columns=['H1','W1','W2','L','T1','T2','C1','C2','R ','OFF-1','OFF-2'])
-                i=0
+                    while True:
+                        fitt_type=int(input("Choose the fitting: \nELBOW-45 OFFSET TRANSITION ELBOW-A ELBOW-B    Straight Line\n    1      2        3        4       5           9\n"))
 
-                while True:
-                    fitt_type=int(input("Choose the fitting: \nELBOW-45 OFFSET TRANSITION ELBOW-A ELBOW-B    Straight Line\n    1      2        3        4       5           9\n"))
-
-                    if fitt_type == 1:
-                        i=i+1
-                        T1=float(input("Enter T1 in cm: "))*sf*1000
-                        T2=float(input("Enter T2 in cm: "))*sf*1000
-                        C1=float(input("Enter The Width (C1) of the next Duct: "))*sf*1000
-                        W1=float(input("Enter The Hieght (W1) of the next Duct: "))*sf*1000
-                        C2=float(input("Enter The Width (C2) of the next Duct: "))*sf*1000
-                        W2=float(input("Enter The Hieght (W2) of the next Duct: "))*sf*1000
-                        fittings.loc[i]=['None',W1,W2,'None',T1,T2,C1,C2,'None','None','None']
+                        if fitt_type == 1:
+                            counter = counter + 1
+                            T1=float(input("Enter T1 in cm: "))*sf*1000
+                            T2=float(input("Enter T2 in cm: "))*sf*1000
+                            C1=float(input("Enter The Width (C1) of the next Duct: "))*sf*1000
+                            W1=float(input("Enter The Hieght (W1) of the next Duct: "))*sf*1000
+                            C2=float(input("Enter The Width (C2) of the next Duct: "))*sf*1000
+                            W2=float(input("Enter The Hieght (W2) of the next Duct: "))*sf*1000
+                            fittings.loc[counter]=["ELBOW-45",C1,W1,C2,W2,T1,T2,"None","None","None","None"]
 
 
-                    elif fitt_type == 2:
-                        i=i+1
-                        OFF_1=float(input("Enter OFF1 in cm: "))*sf*1000
-                        OFF_2=float(input("Enter OFF2 in cm: "))*sf*1000
-                        L=float(input("Enter the length: "))*sf*1000
-                        C1=float(input("Enter The Width(C1) of the next Duct: "))*sf*1000
-                        W1=float(input("Enter The Hieght(W1) of the next Duct: "))*sf*1000
-                        C2=float(input("Enter The Width(C2) of the next Duct: "))*sf*1000
-                        W2=float(input("Enter The Hieght(W2) of the next Duct: "))*sf*1000
-                        fittings.loc[i]=['None',W1,W2,L,'None','None',C1,C2,'None',OFF_1,OFF_2]
+                        elif fitt_type == 2:
+                            counter = counter + 1
+                            OFF_1=int(input("Enter OFF1 in cm: "))*sf*1000
+                            OFF_2=int(input("Enter OFF2 in cm: "))*sf*1000
+                            L=float(input("Enter the length: "))*sf*1000
+                            C1=float(input("Enter The Width(C1) of the next Duct: "))*sf*1000
+                            W1=float(input("Enter The Hieght(W1) of the next Duct: "))*sf*1000
+                            C2=float(input("Enter The Width(C2) of the next Duct: "))*sf*1000
+                            W2=float(input("Enter The Hieght(W2) of the next Duct: "))*sf*1000
+                            fittings.loc[counter]=["OFFSET",C1,W1,C2,W2,"None","None",OFF_1,OFF_2,L,"None"]
 
-                    elif fitt_type == 3:
-                        i=i+1
-                        OFF_1=float(input("Enter OFF1 in cm: "))*sf*1000
-                        OFF_2=float(input("Enter OFF2 in cm: "))*sf*1000
-                        C1=float(input("Enter The Width (C1) of the next Duct: "))*sf*1000
-                        W1=float(input("Enter The Hieght (W1) of the next Duct: "))*sf*1000
-                        C2=float(input("Enter The Width (C2) of the next Duct: "))*sf*1000
-                        W2=float(input("Enter The Hieght (W2) of the next Duct: "))*sf*1000
-                        fittings.loc[i]=['None',W1,W2,'None','None','None',C1,C2,'None',OFF_1,OFF_2]
+                        elif fitt_type == 3:
+                            counter = counter + 1
+                            OFF_1=float(input("Enter OFF1 in cm: "))*sf*1000
+                            OFF_2=float(input("Enter OFF2 in cm: "))*sf*1000
+                            C1=float(input("Enter The Width (C1) of the next Duct: "))*sf*1000
+                            W1=float(input("Enter The Hieght (W1) of the next Duct: "))*sf*1000
+                            C2=float(input("Enter The Width (C2) of the next Duct: "))*sf*1000
+                            W2=float(input("Enter The Hieght (W2) of the next Duct: "))*sf*1000
+                            fittings.loc[counter]=["TRANSITION",C1,W1,C2,W2,"None","None",OFF_1,OFF_2,"None","None"]
 
-                    elif fitt_type == 4:
-                        i=i+1
-                        T1=float(input("Enter T1 in cm: "))*sf*1000
-                        T2=float(input("Enter T2 in cm: "))*sf*1000
-                        C1=float(input("Enter The Width (C1) of the Next Duct: "))*sf*1000
-                        W1=float(input("Enter The Hieght (W1) of the Next Duct: "))*sf*1000
-                        C2=float(input("Enter The Width (C2) of the Next Duct: "))*sf*1000
-                        W2=float(input("Enter The Hieght (W2) of the Next Duct: "))*sf*1000
-                        fittings.loc[i]=['None',W1,W2,'None',T1,T2,C1,C2,'None','None','None']
+                        elif fitt_type == 4:
+                            counter = counter + 1
+                            T1=float(input("Enter T1 in cm: "))*sf*1000
+                            T2=float(input("Enter T2 in cm: "))*sf*1000
+                            C1=float(input("Enter The Width (C1) of the Next Duct: "))*sf*1000
+                            W1=float(input("Enter The Hieght (W1) of the Next Duct: "))*sf*1000
+                            C2=float(input("Enter The Width (C2) of the Next Duct: "))*sf*1000
+                            W2=float(input("Enter The Hieght (W2) of the Next Duct: "))*sf*1000
+                            fittings.loc[counter]=["ELBOW-A",C1,W1,C2,W2,T1,T2,"None","None","None","None"]
 
-                    elif fitt_type == 5:
-                        i=i+1
-                        T1=float(input("Enter T1 in cm: "))*sf*1000
-                        T2=float(input("Enter T2 in cm: "))*sf*1000
-                        C1=float(input("Enter The Width (C1) of the Next Duct: "))*sf*1000
-                        W1=float(input("Enter The Hieght (W1) of the Next Duct: "))*sf*1000
-                        C2=float(input("Enter The Width (C2) of the Next Duct: "))*sf*1000
-                        W2=float(input("Enter The Hieght (W2) of the Next Duct: "))*sf*1000
-                        R=float(input("Enter The Radius of the elbow in cm: "))*sf*1000
-                        fittings.loc[i]=['None',W1,W2,'None',T1,T2,C1,C2,R,'None','None']
+                        elif fitt_type == 5:
+                            counter = counter + 1
+                            T1=float(input("Enter T1 in cm: "))*sf*1000
+                            T2=float(input("Enter T2 in cm: "))*sf*1000
+                            C1=float(input("Enter The Width (C1) of the Next Duct: "))*sf*1000
+                            W1=float(input("Enter The Hieght (W1) of the Next Duct: "))*sf*1000
+                            C2=float(input("Enter The Width (C2) of the Next Duct: "))*sf*1000
+                            W2=float(input("Enter The Hieght (W2) of the Next Duct: "))*sf*1000
+                            R=float(input("Enter The Radius of the elbow in cm: "))*sf*1000
+                            fittings.loc[counter]=["ELBOW-B",C1,W1,C2,W2,T1,T2,"None","None","None",R]
 
-                    elif fitt_type == 9:
-                        live = dt.datetime.now()
-                        date=(str(live.year)+"_"+str(live.month)+"_"+str(live.second)+"_"+str(live.microsecond))
-                        fittings.to_csv(date+"_fittings.csv")
-                        break
+                        elif fitt_type == 9:
+                            break
