@@ -17,9 +17,7 @@ extra pieces length and dimension are stored in another file. Ducts are connecte
 VISION & PARTS TO BE IMPROVED
 First of all I have started taking python courses only recently on Udemy and GitHub is completely new to me, I will try to keep apllyign what I learn for improving this code until I can (somehow) make this code extract all the information it needs from the soft AutoCAD copy on the PC of the designer with out need for manual entry by any user. All parts of the code can be improved but some parts are more important that the others.
 Here are Some suggestions:
--The fittings are stored separately (every fitting in a separate file); it would be nice to store all fitting in 
-one csv file. Many parts of the code are up for improvement.
--The programm will crash if the user enters an unregistered commmand.
+-The fittings are stored separately (every fitting in a separate file); it would be nice to store all fitting in one csv file.Done -The programm will crash if the user enters an unregistered commmand.
 -Starting a front end with tkinter library for a GUI.
 -Converting the whole code into an OOP.
 
