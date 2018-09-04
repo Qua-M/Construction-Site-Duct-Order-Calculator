@@ -63,9 +63,6 @@ while True:
                 trig=input("Want to pass a fitting? Y or N: \nEnter Q to quit...\n")
                 trig.lower()
                 if trig=='q':
-                    standard_pieces.to_csv('MainPieces.csv')
-                    extra_pieces.to_csv('ExtraPieces.csv')
-                    fittings.to_csv('Fittings.csv')
                     break
                 elif trig == 'n':
                     pass
@@ -207,9 +204,6 @@ while True:
             trig=input("Want to pass a fitting? Y or N: \nEnter Q to quit...\n")
             trig.lower()
             if trig=='q':
-                standard_pieces.to_csv('MainPieces.csv')
-                extra_pieces.to_csv('Extra.csv')
-                fittings.to_csv('Fittings.csv')
                 break
             elif trig=='n':
                 pass
